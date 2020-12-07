@@ -1,0 +1,58 @@
+
+.ticketView {
+    width: 700px;
+    height: 160px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 5%;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 1px 30px 30px;
+    position: relative;
+    background: #ece5e0;
+    border: 1px solid rgba(255, 174, 0, 0.2);
+    border-radius: 5px;
+    box-shadow:
+        0 2px 2px rgba(255, 153, 0, 0.2),        
+        0 1px 4px rgba(253, 152, 0, 0.2),        
+        0 0 0 4px rgba(250, 201, 128, 0.35); 
+    color: rgb(56, 36, 0);
+    text-shadow: 0 2px 0 rgba(255,255,255,0.8);
+}
+
+.viewHeader {
+    width: 100%;
+    height: 30px;
+    font-weight: 400;
+    font-size: 30px;
+    padding-bottom: 8px;    
+    border-bottom: 2px solid orange;
+}
+
+.ticketTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableHead {
+    text-shadow: 1px 1px 1px #6060603f; 
+	font-size: 18px; 
+    font-family: "Arial", sans-serif; 
+}
+
+.tableHead tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+.tableHead tr:hover {
+    background: #ddd;
+}
+
+.tableHead th {
+    width: 50px;
+    text-align: left;
+    text-indent: 2px;
+    border: 1px solid black;
+    padding: 10px 0;
+    background: rgba(255, 166, 0, 0.8);
+}
