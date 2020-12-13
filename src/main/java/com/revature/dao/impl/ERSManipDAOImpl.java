@@ -37,7 +37,7 @@ public class ERSManipDAOImpl implements ERSManipDAO{
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, reimbursement.getId());
 			preparedStatement.setFloat(2, reimbursement.getAmount());
-			preparedStatement.setTimestamp(3, Timestamp.valueOf(reimbursement.getSubmitted()));
+			preparedStatement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
 			preparedStatement.setString(4, reimbursement.getDescription());
 			preparedStatement.setInt(5, reimbursement.getAuthor().getId());
 			preparedStatement.setInt(6, DBConversions.statusToDatabase(reimbursement.getStatus()));

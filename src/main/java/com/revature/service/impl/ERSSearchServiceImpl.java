@@ -1,7 +1,6 @@
 package com.revature.service.impl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -16,7 +15,6 @@ import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
 import com.revature.model.Type;
-import com.revature.model.User;
 import com.revature.service.ERSSearchService;
 import com.revature.service.util.Encoder;
 
@@ -110,11 +108,9 @@ public class ERSSearchServiceImpl implements ERSSearchService {
 	}
 	
 	public boolean verifyLogin(String userName, String password) throws BusinessException {
-		System.out.println("ERSSearchSErvice verifyLogin()\nPassword: " + password);
 		boolean checkEmployeeLogin = false;
 		if (userName != "" && password != "") {
 			String dbPassword = ersSearchDAO.getDecryptedPasswordByUsername(userName);
-			System.out.println("DB Password: " + dbPassword);
 			if (password.equals(dbPassword))
 				checkEmployeeLogin = true;
 		}

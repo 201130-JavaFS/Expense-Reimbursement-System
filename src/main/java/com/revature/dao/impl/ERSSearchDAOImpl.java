@@ -32,15 +32,14 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 
 	public List<Reimbursement> getAllEmployeesTickets(int authorId) throws BusinessException {
 		List<Reimbursement> employeesTicketsList = new ArrayList<>();
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
 		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
 			String sql = ERSDbQueries.GET_ALL_EMPLOYEES_TICKETS;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, authorId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				LocalDateTime submittedLocalDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
-//				String formattedDateTime = localDateTime.format(formatter);
+				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 				Reimbursement reimbursement = new Reimbursement(
 					resultSet.getInt("reimb_id"),
 					resultSet.getFloat("reimb_amount"),
@@ -51,7 +50,8 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 					DBConversions.databaseToType(resultSet.getInt("reimb_type_id"))
 				);
 				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					LocalDateTime resolvedLocalDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 					reimbursement.setResolved(resolvedLocalDateTime);
 					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
 				}
@@ -92,7 +92,8 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				LocalDateTime submittedLocalDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 				Reimbursement reimbursement = new Reimbursement(
 					resultSet.getInt("reimb_id"),
 					resultSet.getFloat("reimb_amount"),
@@ -103,7 +104,8 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 					DBConversions.databaseToType(resultSet.getInt("reimb_type_id"))
 				);
 				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					LocalDateTime resolvedLocalDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 					reimbursement.setResolved(resolvedLocalDateTime);
 					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
 				}
@@ -180,7 +182,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 	}
 	
 	public boolean verifyLogin(String userName, String password) throws BusinessException {
-		System.out.println("ERSSearchDAO verifyLogin()");
 		boolean checkEmployeeLogin = false;
 		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
 			String sql = ERSDbQueries.VERIFY_LOGIN;
@@ -188,7 +189,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			preparedStatement.setString(1, userName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				System.out.println("DB Password: " + resultSet.getString("ers_password"));
 				if (resultSet.getString("ers_password").equals(password)) {
 					checkEmployeeLogin = true;
 				}
@@ -246,14 +246,16 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 				Reimbursement reimbursement = new Reimbursement();
 				reimbursement.setId(resultSet.getInt("reimb_id"));
 				reimbursement.setAmount(resultSet.getFloat("reimb_amount"));
-				LocalDateTime submittedLocalDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 				reimbursement.setSubmitted(submittedLocalDateTime);
 				reimbursement.setDescription(resultSet.getString("reimb_description"));
 				reimbursement.setAuthor(getUserById(resultSet.getInt("reimb_author")));
 				reimbursement.setStatus(status);
 				reimbursement.setType(DBConversions.databaseToType(resultSet.getInt("reimb_type_id")));
 				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					LocalDateTime resolvedLocalDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 					reimbursement.setResolved(resolvedLocalDateTime);
 					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
 				}
@@ -279,14 +281,16 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 				Reimbursement reimbursement = new Reimbursement();
 				reimbursement.setId(resultSet.getInt("reimb_id"));
 				reimbursement.setAmount(resultSet.getFloat("reimb_amount"));
-				LocalDateTime submittedLocalDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 				reimbursement.setSubmitted(submittedLocalDateTime);
 				reimbursement.setDescription(resultSet.getString("reimb_description"));
 				reimbursement.setAuthor(getUserById(resultSet.getInt("reimb_author")));
 				reimbursement.setStatus(DBConversions.databaseToStatus(resultSet.getInt("reimb_status_id")));
 				reimbursement.setType(type);
 				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					LocalDateTime resolvedLocalDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 					reimbursement.setResolved(resolvedLocalDateTime);
 					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
 				}
@@ -313,14 +317,16 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 				Reimbursement reimbursement = new Reimbursement();
 				reimbursement.setId(resultSet.getInt("reimb_id"));
 				reimbursement.setAmount(resultSet.getFloat("reimb_amount"));
-				LocalDateTime submittedLocalDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
+				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 				reimbursement.setSubmitted(submittedLocalDateTime);
 				reimbursement.setDescription(resultSet.getString("reimb_description"));
 				reimbursement.setAuthor(getUserById(resultSet.getInt("reimb_author")));
 				reimbursement.setStatus(status);
 				reimbursement.setType(type);
 				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					LocalDateTime resolvedLocalDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
+					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
 					reimbursement.setResolved(resolvedLocalDateTime);
 					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
 				}

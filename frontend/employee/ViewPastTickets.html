@@ -6,6 +6,7 @@
     <title>View Past Tickets</title>
     <link rel="stylesheet" type="text/css" href="../ERS.css">
     <link rel="stylesheet" type="text/css" href="../TicketView.css">
+    <script type="text/javascript" src="ViewPastTickets.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
@@ -14,16 +15,17 @@
             <h1 class="viewHeader">View Past Tickets</h1>
             <table class="ticketTable">
                 <tr class="tableHead">
-                    <th class="filterStatus">Status<i class="fas fa-filter"></i></th>
+                    <th>Status</th>
                     <th>Id</th>
                     <th>Amount</th>
                     <th>Type</th>
+                    <th>Submitted</th>
+                    <th>Resolved</th>
+                    <th>Resolver</th>
                     <th>Description</th>
                     <th>Receipt</th>
                 </tr>
-                <tbody>
-                    <tr></tr>
-                </tbody>
+                <tbody id="employeeTicketBody"></tbody>
             </table>
             <br>
             <a href="Employee.html" class="hrefBack">Back</a>

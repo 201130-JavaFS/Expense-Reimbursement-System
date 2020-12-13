@@ -1,7 +1,5 @@
 package com.revature.service.impl;
 
-import java.time.LocalDateTime;
-
 import org.apache.log4j.Logger;
 
 import com.revature.dao.ERSManipDAO;
@@ -12,6 +10,7 @@ import com.revature.model.Status;
 import com.revature.model.Type;
 import com.revature.service.ERSManipService;
 import com.revature.service.ERSSearchService;
+import com.revature.service.util.DBConversions;
 
 public class ERSManipServiceImpl implements ERSManipService {
 	
@@ -24,7 +23,7 @@ public class ERSManipServiceImpl implements ERSManipService {
 		boolean requestCreated = false;
 //		int reimb_id = ersSearchService.getNextReimbId();
 		// retrieve author id??
-		Reimbursement reimbursement = new Reimbursement(200f, LocalDateTime.now(), "Ate the best sushi."
+		Reimbursement reimbursement = new Reimbursement(200f, DBConversions.getCurrentDateAsString(), "Ate the best sushi."
 				, null, Status.PENDING, Type.FOOD);
 		ersManipDAO.createNewReimbursementRequest(reimbursement);
 		

@@ -17,20 +17,20 @@ import com.revature.service.impl.ERSSearchServiceImpl;
 public class LoginController {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
-	private ERSSearchService ersLoginService = new ERSSearchServiceImpl();
+	private ERSSearchService ersSearchService = new ERSSearchServiceImpl();
 
 	public void login(HttpServletRequest req, HttpServletResponse res) throws IOException, BusinessException {
 		if(req.getMethod().equals("POST")) {
 			BufferedReader reader = req.getReader();
-			StringBuilder sb = new StringBuilder();
+			StringBuilder stringBuilder = new StringBuilder();
 			String line = reader.readLine();
 			while (line != null) {
-				sb.append(line);
+				stringBuilder.append(line);
 				line = reader.readLine();
 			}
-			String body = new String(sb);
+			String body = new String(stringBuilder);
 			LoginDTO loginDTO = objectMapper.readValue(body, LoginDTO.class);
-			if (ersLoginService.verifyLogin(
+			if (ersSearchService.verifyLogin(
 					loginDTO.username, loginDTO.password)) {
 				HttpSession httpSession = req.getSession();
 				httpSession.setAttribute("user", loginDTO);

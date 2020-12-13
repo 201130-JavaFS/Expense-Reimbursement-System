@@ -1,10 +1,24 @@
 package com.revature.service.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
 
 public class DBConversions {
+	
+	public static String getCurrentDateAsString() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		return localDateTime.format(formatter);	
+	}
+	
+	public static String getDateFromLocalDateTime(LocalDateTime localDateTime) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		return localDateTime.format(formatter);	
+	}
 	
 	public static int statusToDatabase(Status status) {
 		if (status == Status.PENDING) return 0;
