@@ -16,16 +16,16 @@ import com.revature.service.ERSSearchService;
 public class ERSManipServiceImpl implements ERSManipService {
 	
 	private static Logger log = Logger.getLogger(ERSManipServiceImpl.class);
-	ERSSearchService ersSearchService = new ERSSearchServiceImpl();
-	ERSManipDAO ersManipDAO = new ERSManipDAOImpl();
+	private ERSSearchService ersSearchService = new ERSSearchServiceImpl();
+	private ERSManipDAO ersManipDAO = new ERSManipDAOImpl();
 
 	@Override
 	public boolean createReimbursementRequest() throws BusinessException {
 		boolean requestCreated = false;
 //		int reimb_id = ersSearchService.getNextReimbId();
 		// retrieve author id??
-		Reimbursement reimbursement = new Reimbursement(3, 200f, LocalDateTime.now(), "Ate the best sushi."
-				, 4 /*test employee*/, Status.PENDING, Type.FOOD);
+		Reimbursement reimbursement = new Reimbursement(200f, LocalDateTime.now(), "Ate the best sushi."
+				, null, Status.PENDING, Type.FOOD);
 		ersManipDAO.createNewReimbursementRequest(reimbursement);
 		
 		return requestCreated;
@@ -44,6 +44,11 @@ public class ERSManipServiceImpl implements ERSManipService {
 			}
 		}
 		return isResolved;
+	}
+
+	@Override
+	public void encryptPasswordById(int reimb_id) throws BusinessException {
+		ersManipDAO.encryptPasswordById(reimb_id);
 	}
 
 }

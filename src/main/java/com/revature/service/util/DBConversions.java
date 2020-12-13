@@ -1,5 +1,6 @@
 package com.revature.service.util;
 
+import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
 
@@ -29,6 +30,16 @@ public class DBConversions {
 		else if (reimb_type_id == 2) return Type.TRAVEL;
 		else if (reimb_type_id == 3) return Type.FOOD;
 		else return Type.OTHER;
+	}
+	
+	public static int roleToDatabase(Role role) {
+		if (role == Role.EMPLOYEE) return 1;
+		else return 2;
+	}
+	
+	public static Role databaseToRole(int user_role_id) {
+		if (user_role_id == 1) return Role.EMPLOYEE;
+		else return Role.FINANCEMANAGER;
 	}
 
 }

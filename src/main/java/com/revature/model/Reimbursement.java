@@ -11,8 +11,8 @@ public class Reimbursement {
 	private LocalDateTime resolved;
 	private String description;
 	private Blob receipt;
-	private int author;
-	private int resolver;
+	private User author;
+	private User resolver;
 	private Status status;
 	private Type type;
 	
@@ -23,8 +23,56 @@ public class Reimbursement {
 				+ resolver + ", status=" + status + ", type=" + type + "]";
 	}
 
-	public Reimbursement(int id, float amount, LocalDateTime submitted, String description,
-			 int author, Status status, Type type) {
+
+	
+	public Reimbursement(float amount, LocalDateTime submitted, String description, User author, Status status,
+			Type type) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.description = description;
+		this.author = author;
+		this.status = status;
+		this.type = type;
+	}
+
+
+
+	public Reimbursement(float amount, LocalDateTime submitted, LocalDateTime resolved, String description,
+			Blob receipt, User author, User resolver, Status status, Type type) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.receipt = receipt;
+		this.author = author;
+		this.resolver = resolver;
+		this.status = status;
+		this.type = type;
+	}
+
+
+
+	public Reimbursement(int id, float amount, LocalDateTime submitted, LocalDateTime resolved, String description,
+			Blob receipt, User author, User resolver, Status status, Type type) {
+		super();
+		this.id = id;
+		this.amount = amount;
+		this.submitted = submitted;
+		this.resolved = resolved;
+		this.description = description;
+		this.receipt = receipt;
+		this.author = author;
+		this.resolver = resolver;
+		this.status = status;
+		this.type = type;
+	}
+
+
+
+	public Reimbursement(int id, float amount, LocalDateTime submitted, String description, User author, Status status,
+			Type type) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -34,7 +82,9 @@ public class Reimbursement {
 		this.status = status;
 		this.type = type;
 	}
-	
+
+
+
 	public Reimbursement() {
 	}
 
@@ -74,18 +124,23 @@ public class Reimbursement {
 	public void setReceipt(Blob receipt) {
 		this.receipt = receipt;
 	}
-	public int getAuthor() {
+
+	public User getAuthor() {
 		return author;
 	}
-	public void setAuthor(int author) {
+
+	public void setAuthor(User author) {
 		this.author = author;
 	}
-	public int getResolver() {
+
+	public User getResolver() {
 		return resolver;
 	}
-	public void setResolver(int resolver) {
+
+	public void setResolver(User resolver) {
 		this.resolver = resolver;
 	}
+
 	public Status getStatus() {
 		return status;
 	}

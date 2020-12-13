@@ -17,7 +17,7 @@ body {
     /* background: grey; */
 }
 
-.form1 {
+.formView {
     width: 340px;
     height: 220px;
     left: 50%;
@@ -45,12 +45,12 @@ body {
     border-bottom: 2px solid orange;
 }
 
-.form1 span {
+.formView span {
     color: rgb(56, 36, 0);
     text-shadow: 0 2px 0 rgba(255,255,255,0.8);
 }
 
-.form1 label {
+.formView label {
     width: 40%;
     float: left;
     letter-spacing: 1px;
@@ -78,23 +78,25 @@ body {
     transition: all 0.3s ease-out;
 }
 
-.form1 input[type=text]:hover,
-.form1 input[type=password]:hover,
-.form1 label:hover ~ input[type=text],
-.form1 label:hover ~ input[type=password] {
+.formView input[type=text]:hover,
+.formView input[type=password]:hover,
+.formView label:hover ~ input[type=text],
+.formView label:hover ~ input[type=password] {
     border:1px solid #ffa600;
     background: linear-gradient(rgba(255, 214, 138, 0.719) 10%, rgba(255, 166, 0, 0.37) 100%);
 }
 
-.form1 input[type=text]:focus, 
-.form1 input[type=password]:focus {
+.formView input[type=text]:focus, 
+.formView input[type=password]:focus {
     background: beige;
     border-color:#BBBBBB;
     outline: none;
 }
 
-.form1 input[type=submit] {
-    float: left;
+#loginButton {
+    float: right;
+    width: 100px;
+    height: 40px;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     background: linear-gradient(to bottom, #ffffff 5%, #d4d4d4d4 100%);
     border-radius: 6px;
@@ -110,7 +112,7 @@ body {
     outline: 0;
 }
 
-.form1 input[type=submit]:hover {
+#loginButton:hover {
     background: linear-gradient(rgb(255, 255, 255) 10%, rgb(255, 166, 0) 100%);
     box-shadow:
         inset 0 1px rgba(255, 153, 0, 0.3),
