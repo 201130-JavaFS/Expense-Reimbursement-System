@@ -28,7 +28,6 @@ public class MasterServlet extends HttpServlet {
 		
 		switch (URI) {
 		case "login":
-			System.out.println("case login");
 			try {
 				loginController.login(req, res);
 			} catch (IOException | BusinessException e) {
@@ -36,7 +35,6 @@ public class MasterServlet extends HttpServlet {
 			}
 			break;
 		case "employeetickets":
-			System.out.println("case employeetickets");
 			if(req.getSession(false) != null) {
 				try {
 					ticketController.getAllEmployeesTickets(req, res);

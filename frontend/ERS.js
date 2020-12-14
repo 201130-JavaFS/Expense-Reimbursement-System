@@ -9,8 +9,6 @@ async function login() {
   let inputUsername = document.getElementById("username").value;
   let inputPassword = document.getElementById("password").value;
 
-  sessionStorage.setItem('inputUsername', inputUsername);
-
   let user = {
     username: inputUsername,
     password: inputPassword

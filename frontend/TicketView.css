@@ -35,9 +35,9 @@
 }
 
 .tableHead {
-    text-shadow: 1px 1px 1px #6060603f; 
-	font-size: 18px; 
-    font-family: "Arial", sans-serif; 
+  text-shadow: 1px 1px 1px #6060603f; 
+  font-size: 18px; 
+  font-family: "Arial", sans-serif; 
 }
 
 .tableHead tr:nth-child(even) {
@@ -56,3 +56,16 @@
     padding: 10px 0;
     background: rgba(255, 166, 0, 0.8);
 }
+
+#employeeTicketBody tr, #employeeTicketBody td {
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 5px;
+  font-size: 13px;
+}
+
+#employeeTicketBody tr {
+  height: 40px;
+}
+
+#employeeTicketBody tr:nth-child(even) {background-color: #e6e6e6;}
+#employeeTicketBody tr:nth-child(odd) {background-color: #ffffff;}

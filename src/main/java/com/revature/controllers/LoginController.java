@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.exception.BusinessException;
 import com.revature.model.LoginDTO;
-import com.revature.model.User;
 import com.revature.service.ERSSearchService;
 import com.revature.service.impl.ERSSearchServiceImpl;
 
 public class LoginController {
 	
+	private static Logger log = Logger.getLogger(LoginController.class);
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private ERSSearchService ersSearchService = new ERSSearchServiceImpl();
 
@@ -37,6 +39,13 @@ public class LoginController {
 				httpSession.setAttribute("loggedIn", true);
 				res.setStatus(200);
 				res.getWriter().print("Login Successful.");
+				HttpSession session = req.getSession(false);
+				if (session != null) {
+					session.setAttribute("username", loginDTO.username);
+				}
+				String username = (String) session.getAttribute("username");
+				log.info(username + " has logged in.");
+				
 			} else {
 				HttpSession httpSession = req.getSession(false);
 				if (httpSession != null) {
@@ -46,7 +55,6 @@ public class LoginController {
 				res.getWriter().print("Login failed.");
 			}
 		}
-		
 	}
 	
 }
