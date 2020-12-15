@@ -43,8 +43,8 @@ public class ERSManipDAOImpl implements ERSManipDAO{
 			preparedStatement.setInt(6, DBConversions.statusToDatabase(reimbursement.getStatus()));
 			preparedStatement.setInt(7, DBConversions.typeToDatabase(reimbursement.getType()));
 			
-			preparedStatement.executeUpdate();
-			isCreated = true;
+			int check = preparedStatement.executeUpdate();
+			if (check > 0) isCreated = true;
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.exception.BusinessException;
 import com.revature.model.LoginDTO;
+import com.revature.model.Role;
 import com.revature.service.ERSSearchService;
 import com.revature.service.impl.ERSSearchServiceImpl;
 
@@ -35,17 +36,15 @@ public class LoginController {
 			if (ersSearchService.verifyLogin(
 					loginDTO.username, loginDTO.password)) {
 				HttpSession httpSession = req.getSession();
-				httpSession.setAttribute("user", loginDTO);
+				httpSession.setAttribute("username", loginDTO.username);
 				httpSession.setAttribute("loggedIn", true);
 				res.setStatus(200);
-				res.getWriter().print("Login Successful.");
-				HttpSession session = req.getSession(false);
-				if (session != null) {
-					session.setAttribute("username", loginDTO.username);
-				}
-				String username = (String) session.getAttribute("username");
+				Role role = ersSearchService.getRoleByUsername(loginDTO.username);
+				if (role == Role.EMPLOYEE) res.getWriter().print(1);
+				else if (role == Role.FINANCEMANAGER) res.getWriter().print(2);
+				else res.getWriter().print(0);
+				String username = (String) httpSession.getAttribute("username");
 				log.info(username + " has logged in.");
-				
 			} else {
 				HttpSession httpSession = req.getSession(false);
 				if (httpSession != null) {

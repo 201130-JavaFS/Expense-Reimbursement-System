@@ -17,7 +17,7 @@ body {
     /* background: grey; */
 }
 
-.formView {
+.loginView {
     width: 340px;
     height: 220px;
     left: 50%;
@@ -45,12 +45,12 @@ body {
     border-bottom: 2px solid orange;
 }
 
-.formView span {
+.loginView span {
     color: rgb(56, 36, 0);
     text-shadow: 0 2px 0 rgba(255,255,255,0.8);
 }
 
-.formView label {
+.loginView label {
     width: 40%;
     float: left;
     letter-spacing: 1px;
@@ -78,16 +78,16 @@ body {
     transition: all 0.3s ease-out;
 }
 
-.formView input[type=text]:hover,
-.formView input[type=password]:hover,
-.formView label:hover ~ input[type=text],
-.formView label:hover ~ input[type=password] {
+.loginView input[type=text]:hover,
+.loginView input[type=password]:hover,
+.loginView label:hover ~ input[type=text],
+.loginView label:hover ~ input[type=password] {
     border:1px solid #ffa600;
     background: linear-gradient(rgba(255, 214, 138, 0.719) 10%, rgba(255, 166, 0, 0.37) 100%);
 }
 
-.formView input[type=text]:focus, 
-.formView input[type=password]:focus {
+.loginView input[type=text]:focus, 
+.loginView input[type=password]:focus {
     background: beige;
     border-color:#BBBBBB;
     outline: none;
@@ -236,4 +236,18 @@ body {
         inset 0 1px rgba(255, 153, 0, 0.479),
         inset 0 20px 40px rgba(255, 166, 2, 0.452);
     color: #303030;
+}
+
+h6 {
+  color: red;
+  font-weight: 500;
+  font-size: 25px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 500ms;
+  display: none;
+}
+
+h6.disappear {
+  opacity: 0;
 }

@@ -3,11 +3,13 @@ package com.revature.service.impl;
 import org.apache.log4j.Logger;
 
 import com.revature.dao.ERSManipDAO;
+import com.revature.dao.ERSSearchDAO;
 import com.revature.dao.impl.ERSManipDAOImpl;
+import com.revature.dao.impl.ERSSearchDAOImpl;
 import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
-import com.revature.model.Type;
+import com.revature.model.User;
 import com.revature.service.ERSManipService;
 import com.revature.service.ERSSearchService;
 import com.revature.service.util.DBConversions;
@@ -17,17 +19,22 @@ public class ERSManipServiceImpl implements ERSManipService {
 	private static Logger log = Logger.getLogger(ERSManipServiceImpl.class);
 	private ERSSearchService ersSearchService = new ERSSearchServiceImpl();
 	private ERSManipDAO ersManipDAO = new ERSManipDAOImpl();
+	private ERSSearchDAO ersSearchDAO = new ERSSearchDAOImpl();
 
 	@Override
-	public boolean createReimbursementRequest() throws BusinessException {
-		boolean requestCreated = false;
-//		int reimb_id = ersSearchService.getNextReimbId();
-		// retrieve author id??
-		Reimbursement reimbursement = new Reimbursement(200f, DBConversions.getCurrentDateAsString(), "Ate the best sushi."
-				, null, Status.PENDING, Type.FOOD);
-		ersManipDAO.createNewReimbursementRequest(reimbursement);
+	public boolean createReimbursementRequest(String username, float amount, String type, String description) throws BusinessException {
+		Reimbursement reimbursement = new Reimbursement();
+		int id = ersSearchDAO.getMaxId() + 1;
+		User user = ersSearchDAO.getUserByUsername(username);
+		reimbursement.setId(id);
+		reimbursement.setAmount(amount);
+		reimbursement.setDescription(description);
+		reimbursement.setAuthor(user);
+		reimbursement.setStatus(Status.PENDING);
+		reimbursement.setType(DBConversions.stringToType(type));
+		boolean isCreated = ersManipDAO.createNewReimbursementRequest(reimbursement);
 		
-		return requestCreated;
+		return isCreated;
 	}
 
 	@Override

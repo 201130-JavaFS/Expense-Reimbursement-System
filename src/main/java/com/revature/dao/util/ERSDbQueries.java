@@ -50,27 +50,42 @@ public class ERSDbQueries {
 			"select ers_users_id "
 			+ "from ers.users "
 			+ "where ers_username=?";
+	
 	public static final String GET_USER_BY_ID = 
 			"select ers_username, user_first_name, user_last_name, user_email, user_role_id "
 			+ "from ers.users "
 			+ "where ers_users_id=?";
+	
 	public static final String GET_ALL_TICKETS_BY_STATUS = 
 			"select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
 			+ "reimb_author, reimb_resolver, reimb_type_id"
 			+ "from ers.reimbursement "
 			+ "where reimb_status_id=?";
+	
 	public static final String GET_ALL_TICKETS_BY_TYPE = 
 			"select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
 			+ "reimb_author, reimb_resolver, reimb_status_id"
 			+ "from ers.reimbursement "
 			+ "where reimb_type_id=?";
+	
 	public static final String GET_ALL_TICKETS_BY_STATUS_TYPE = 
 			"select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
 			+ "reimb_author, reimb_resolver"
 			+ "from ers.reimbursement "
 			+ "where reimb_status_id=?, reimb_type_id=?";
+	
 	public static final String GET_PASSWORD_BY_USERNAME = 
 			"select ers_password "
+			+ "from ers.users "
+			+ "where ers_username=?";
+	
+	public static final String GET_USER_BY_USERNAME = 
+			"select ers_users_id, user_first_name, user_last_name, user_email, user_role_id "
+			+ "from ers.users "
+			+ "where ers_username=?";
+	
+	public static final String GET_ROLE_BY_USERNAME = 
+			"select user_role_id "
 			+ "from ers.users "
 			+ "where ers_username=?";
 

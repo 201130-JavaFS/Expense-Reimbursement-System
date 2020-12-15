@@ -2,7 +2,7 @@ textarea {
     resize: none;
 }
 
-.form2 {
+#requestFormView {
     width: 530px;
     height: 280px;
     left: 50%;
@@ -23,7 +23,7 @@ textarea {
     text-shadow: 0 2px 0 rgba(255,255,255,0.8);
 }
 
-.form2 label {
+#requestFormView label {
     letter-spacing: 1px;
     padding-top: 8px;
     margin-left: 0;
@@ -36,7 +36,7 @@ textarea {
     text-indent: 12px;
 }
 
-#amount, #type, #description {
+#amount, #type {
     padding: 8px 5px;
     margin-bottom: 10px;
     margin-right: 0;
@@ -46,18 +46,18 @@ textarea {
     border-radius: 5px;
 }
 
-#amount:hover, #type:hover {
+#amount:hover, #type:hover, #description:hover {
     border:1px solid #ffa600;
     background: linear-gradient(rgba(255, 214, 138, 0.719) 10%, rgba(255, 166, 0, 0.37) 100%);
 }
 
-#amount:focus, #type:focus {
+#amount:focus, #type:focus, #description:focus {
     background: beige;
     border-color:#BBBBBB;
     outline: none;
 }
 
-.form2 input[type=submit] {
+#submitButton {
     float: right;
     position: relative;
     box-shadow: inset 0px 1px 0px 0px #ffffff;
@@ -75,7 +75,7 @@ textarea {
     outline: 0;
 }
 
-.form2 input[type=submit]:hover {
+#submitButton:hover {
     background: linear-gradient(rgb(255, 255, 255) 10%, rgb(255, 166, 0) 100%);
     box-shadow:
         inset 0 1px rgba(255, 153, 0, 0.3),

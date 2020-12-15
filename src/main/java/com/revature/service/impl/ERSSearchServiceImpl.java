@@ -13,6 +13,7 @@ import com.revature.dao.ERSSearchDAO;
 import com.revature.dao.impl.ERSSearchDAOImpl;
 import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
+import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
 import com.revature.service.ERSSearchService;
@@ -148,6 +149,15 @@ public class ERSSearchServiceImpl implements ERSSearchService {
 			log.warn("Could not retreive Tickets by " + status + " and " + type);
 		}
 		return reimbList;
+	}
+
+	@Override
+	public Role getRoleByUsername(String username) throws BusinessException {
+		Role role = ersSearchDAO.getRoleByUsername(username);
+		if (role == null) {
+			log.warn("Could not find Role.");
+		}
+		return role;
 	}
 
 }

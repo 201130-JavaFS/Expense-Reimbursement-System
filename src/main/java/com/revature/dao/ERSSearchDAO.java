@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
+import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
 import com.revature.model.User;
@@ -22,5 +23,7 @@ public interface ERSSearchDAO {
 	public List<Reimbursement> getAllTicketsByType(Type type) throws BusinessException;
 	public List<Reimbursement> getAllTicketsByStatusType(Status status, Type type) throws BusinessException;
 	public String getDecryptedPasswordByUsername(String userName) throws BusinessException;
+	public User getUserByUsername(String username) throws BusinessException;
+	public Role getRoleByUsername(String username) throws BusinessException;
 
 }

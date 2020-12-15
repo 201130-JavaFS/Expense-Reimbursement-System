@@ -20,6 +20,7 @@ import com.revature.dao.util.ERSDbUtilProps;
 import com.revature.dao.util.ERSPostgresSqlConnection;
 import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
+import com.revature.model.Role;
 import com.revature.model.Status;
 import com.revature.model.Type;
 import com.revature.model.User;
@@ -352,25 +353,79 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 				password = resultSet.getString("ers_password");
 			}
 			else {
-				log.warn("Error: Ticket does not exist.");
+				log.warn("Error: User does not exist.");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
 		Encoder encoder = null;
-		try {
-			encoder = new Encoder();
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			log.error(e);
-		}
 		String decryptedPassword = null;
-		try {
-			decryptedPassword = Encoder.decrypt(password, encoder.getKey());
-		} catch (GeneralSecurityException | IOException e) {
-			log.error(e);
+		if (password != "" && password != null) {
+			try {
+				encoder = new Encoder();
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				log.error(e);
+			}
+			try {
+				decryptedPassword = Encoder.decrypt(password, encoder.getKey());
+			} catch (GeneralSecurityException | IOException e) {
+				log.error(e);
+			}
 		}
 		return decryptedPassword;
+	}
+
+	@Override
+	public User getUserByUsername(String username) throws BusinessException {
+		User user = null;
+		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
+			String sql = ERSDbQueries.GET_USER_BY_USERNAME;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, username);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				User tempUser = new User(
+						resultSet.getInt("ers_users_id"),
+						username,
+						resultSet.getString("user_first_name"),
+						resultSet.getString("user_last_name"),
+						resultSet.getString("user_email"),
+						DBConversions.databaseToRole(resultSet.getInt("user_role_id"))
+						);
+				user = tempUser;
+			}
+			else {
+				log.warn("Error: User does not exist.");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
+			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
+		}
+		return user;
+	}
+
+	@Override
+	public Role getRoleByUsername(String username) throws BusinessException {
+		int user_role_id = 0;
+		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
+			String sql = ERSDbQueries.GET_ROLE_BY_USERNAME;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, username);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				user_role_id = resultSet.getInt("user_role_id");
+			}
+			else {
+				log.warn("Error: User does not exist.");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
+			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
+		}
+		if (user_role_id == 1) return Role.EMPLOYEE;
+		else if (user_role_id == 2) return Role.FINANCEMANAGER;
+		else return null;
 	}
 
 }

@@ -20,6 +20,13 @@ public class DBConversions {
 		return localDateTime.format(formatter);	
 	}
 	
+	public static Type stringToType(String type) {
+		if (type.equals("Lodging") || type.equals("lodging")) return Type.LODGING;
+		else if (type.equals("Travel") || type.equals("travel")) return Type.TRAVEL;
+		else if (type.equals("Food") || type.equals("food")) return Type.FOOD;
+		else return Type.OTHER;
+	}
+	
 	public static int statusToDatabase(Status status) {
 		if (status == Status.PENDING) return 0;
 		else if (status == Status.APPROVED) return 1;

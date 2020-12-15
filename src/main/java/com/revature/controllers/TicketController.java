@@ -24,9 +24,9 @@ public class TicketController {
 	public void getAllEmployeesTickets(HttpServletRequest req, HttpServletResponse res) 
 			throws IOException, BusinessException{
 		String username = null;
-		HttpSession session = req.getSession(false);
-		if (session != null) {
-			username = (String) session.getAttribute("username");
+		HttpSession httpSession = req.getSession(false);
+		if (httpSession != null) {
+			username = (String) httpSession.getAttribute("username");
 		}
 		
 		int authorId = ersSearchService.getIdByUsername(username);

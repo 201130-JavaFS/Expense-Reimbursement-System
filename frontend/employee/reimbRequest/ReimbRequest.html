@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimbursement Request</title>
+    <link rel="stylesheet" type="text/css" href="../../ERS.css">
+    <link rel="stylesheet" type="text/css" href="ReimbRequest.css">
+    <script type="text/javascript" src="ReimbRequest.js"></script>
+</head>
+<body>
+  <div class="main">
+    <div id="requestFormView">
+      <h1 id="formHeader">Reimbursement Request</h1>
+      <span>
+          <label for="amount">Amount: $</label>
+          <input type="value" name="amount" id="amount" placeholder="0.00">
+          <label for="type">Type:</label>
+          <input list="types" name="type" id="type">
+          <datalist id="types">
+              <option value="Lodging">
+              <option value="Travel">
+              <option value="Food">
+              <option value="Other">
+          </datalist>
+      </span>
+      <label for="description">Description:</label>
+      <br>
+      <textarea id="description" rows="6" cols="70"></textarea>
+      <br>
+      <span>
+        <button id="submitButton">Submit</button>
+        <a href="../Employee.html" class="hrefBack">Cancel</a>
+      </span>
+    </div>
+  </div>
+</body>
+</html>
