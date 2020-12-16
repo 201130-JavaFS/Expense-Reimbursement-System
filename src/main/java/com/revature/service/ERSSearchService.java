@@ -22,5 +22,5 @@ public interface ERSSearchService{
 	public List<Reimbursement> getAllTicketsByType(Type type) throws BusinessException;
 	public List<Reimbursement> getAllTicketsByStatusType(Status status, Type type) throws BusinessException;
 	public Role getRoleByUsername(String username) throws BusinessException;
-
+	
 }

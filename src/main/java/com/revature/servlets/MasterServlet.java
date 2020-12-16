@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.revature.controllers.LoginController;
 import com.revature.controllers.TicketController;
 import com.revature.controllers.TicketRequestController;
+import com.revature.controllers.TicketStatusController;
 import com.revature.exception.BusinessException;
 
 public class MasterServlet extends HttpServlet {
@@ -20,6 +21,7 @@ public class MasterServlet extends HttpServlet {
 	private LoginController loginController = new LoginController();
 	private TicketController ticketController = new TicketController();
 	private TicketRequestController ticketRequestController = new TicketRequestController();
+	private TicketStatusController ticketStatusController = new TicketStatusController();
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
@@ -50,6 +52,46 @@ public class MasterServlet extends HttpServlet {
 			if(req.getSession(false) != null) {
 				try {
 					ticketRequestController.createReimbursementRequest(req, res);
+				} catch (IOException | BusinessException e) {
+					log.error(e);
+				}
+			}
+			else res.setStatus(403);
+			break;
+		case "alltickets":
+			if(req.getSession(false) != null) {
+				try {
+					ticketController.getAllTickets(req, res);
+				} catch (IOException | BusinessException e) {
+					log.error(e);
+				}
+			}
+			else res.setStatus(403);
+			break;
+		case "filteredtickets":
+			if(req.getSession(false) != null) {
+				try {
+					ticketStatusController.getAllFilteredTickets(req, res);
+				} catch (IOException | BusinessException e) {
+					log.error(e);
+				}
+			}
+			else res.setStatus(403);
+			break;
+		case "approveticket":
+			if(req.getSession(false) != null) {
+				try {
+					ticketStatusController.approveTicket(req, res);
+				} catch (IOException | BusinessException e) {
+					log.error(e);
+				}
+			}
+			else res.setStatus(403);
+			break;
+		case "denyticket":
+			if(req.getSession(false) != null) {
+				try {
+					ticketStatusController.denyTicket(req, res);
 				} catch (IOException | BusinessException e) {
 					log.error(e);
 				}

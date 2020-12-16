@@ -1,6 +1,6 @@
 CREATE TABLE "ERS".reimbursement (
 	reimb_id int NOT NULL,
-	reimb_amount int8 NOT NULL,
+	reimb_amount float4 NOT NULL,
 	reimb_submitted timestamp(0) NOT NULL,
 	reimb_resolved timestamp(0) NULL,
 	reimb_description varchar(250) NULL,

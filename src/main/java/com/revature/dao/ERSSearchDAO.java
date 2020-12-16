@@ -13,7 +13,7 @@ public interface ERSSearchDAO {
 	
 	public List<Reimbursement> getAllEmployeesTickets(int authorId) throws BusinessException;
 	public int getMaxId() throws BusinessException;
-	public List<Reimbursement> getAllTickets(int authorId) throws BusinessException;
+	public List<Reimbursement> getAllTickets() throws BusinessException;
 	public Status checkStatusOfTicketById(int reimb_id) throws BusinessException;
 	public String getPasswordById(int ers_users_id) throws BusinessException;
 	public int getIdByUsername(String username) throws BusinessException;

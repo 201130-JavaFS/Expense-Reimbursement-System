@@ -86,7 +86,7 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 	}
 	
 	@Override
-	public List<Reimbursement> getAllTickets(int authorId) throws BusinessException {
+	public List<Reimbursement> getAllTickets() throws BusinessException {
 		List<Reimbursement> ticketsList = new ArrayList<>();
 		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
 			String sql = ERSDbQueries.GET_ALL_TICKETS;

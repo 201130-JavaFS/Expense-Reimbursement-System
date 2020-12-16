@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Single Ticket</title>
+    <link rel="stylesheet" type="text/css" href="../../../ERS.css">
+    <link rel="stylesheet" type="text/css" href="../../../TicketView.css">
+    <script type="text/javascript" src="../../../URL.js"></script>
+    <script type="text/javascript" src="ViewSingleTicket.js"></script>
+    <script type="text/javascript" src="ResolveTicket.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="ticketView">
+            <h1 class="viewHeader">Ticket Review</h1>
+            <table class="ticketTable">
+                <tr class="tableHead">
+                  <th>Status</th>
+                  <th>Id</th>
+                  <th>Amount</th>
+                  <th>Type</th>
+                  <th>Submitted</th>
+                  <th>Resolved</th>
+                  <th>Resolver</th>
+                  <th>Description</th>
+                  <th>Receipt</th>
+                </tr>
+                <tbody id="financeManagerTicketBody"></tbody>
+            </table>
+            <br>
+            <div id="resolveButtons">
+              <button id="Approve">Approve</button>
+              <button id="Deny">Deny</button>
+            </div>
+            <br>
+            <a href="../ViewAllTickets.html" class="hrefBack">Back</a>
+        </div>
+      </div>
+</body>
+</html>

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.revature.exception.BusinessException;
+import com.revature.model.Status;
 import com.revature.service.ERSManipService;
 import com.revature.service.ERSSearchService;
 import com.revature.service.impl.ERSManipServiceImpl;
@@ -21,9 +22,6 @@ public class ERSMain {
 		Scanner scanner = new Scanner(System.in);
 		ERSManipService ersManipService = new ERSManipServiceImpl();
 		ERSSearchService ersSearchService = new ERSSearchServiceImpl();
-	
-		log.info("test");
-		log.warn("test warning");
 
 
 /* 

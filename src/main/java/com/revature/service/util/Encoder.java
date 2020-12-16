@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encoder {
 	
-	private String password = "admin";
+	private String password = "admin"; // environment variables not working
 	private byte[] salt = new String("12345678").getBytes();
 	private int iterationCount = 40000;
 	private int keyLength = 128;
@@ -31,13 +31,6 @@ public class Encoder {
 	public SecretKeySpec getKey() {
 		return this.key;
 	}
-	
-//	  String originalPassword = "pass";
-//    System.out.println("Original password: " + originalPassword);
-//    String encryptedPassword = Encoder.encrypt(originalPassword, key);
-//    System.out.println("Encrypted password: " + encryptedPassword);
-//    String decryptedPassword = Encoder.decrypt(encryptedPassword, key);
-//    System.out.println("Decrypted password: " + decryptedPassword);
     
 	private static SecretKeySpec createSecretKey(char[] password, byte[] salt, int iterationCount, int keyLength) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");

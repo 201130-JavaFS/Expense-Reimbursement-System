@@ -1,12 +1,41 @@
 
 window.addEventListener('load', function() {
-  getEmployeeTickets();
+  document.getElementById("byPending").addEventListener('click', getPendingTickets);
+  document.getElementById("byApproved").addEventListener('click', getApprovedTickets);
+  document.getElementById("byDenied").addEventListener('click', getDeniedTickets);
 });
 
-async function getEmployeeTickets() {
-  let response = await fetch(url+'employeetickets', {credentials: "include"});
+function getPendingTickets() {
+  getFilteredTickets("Pending");
+}
+
+function getApprovedTickets() {
+  getFilteredTickets("Approved");
+}
+
+function getDeniedTickets() {
+  getFilteredTickets("Denied");
+}
+
+async function getFilteredTickets(buttonStatus) {
+  let inputStatus = buttonStatus;
+
+  let status = {
+    status: inputStatus
+  };
+
+  let response = await fetch(url+'filteredtickets', {
+    method: "POST",
+    body: JSON.stringify(status),
+    credentials: "include"
+  });
 
   if (response.status === 200) {
+    let tableBody = document.createElement("tbody");
+    let oldTableBody = document.getElementById("financeManagerTicketBody");
+    oldTableBody.parentNode.replaceChild(tableBody, oldTableBody);
+    tableBody.setAttribute("id", "financeManagerTicketBody");
+
     let data = await response.json();
     let index = 0;
 
@@ -25,7 +54,7 @@ async function getEmployeeTickets() {
 
       // amount
       let cell3 = document.createElement("td");
-      cell3.innerHTML = "$" + ticket.amount;
+      cell3.innerHTML = "$" + ticket.amount.toFixed(2);
       row.appendChild(cell3);
 
       // type
@@ -41,7 +70,7 @@ async function getEmployeeTickets() {
       // resolved
       if (ticket.resolved != null) {
         let cell6 = document.createElement("td");
-        cell6.innerHTML = ticket.resolved;
+        cell6.innerHTML = ticket.submitted;
         row.appendChild(cell6);
       } else {
         let cell6 = document.createElement("td");
@@ -52,7 +81,7 @@ async function getEmployeeTickets() {
       // resolver
       if (ticket.resolver != null) {
         let cell7 = document.createElement("td");
-        cell7.innerHTML = ticket.resolver;
+        cell7.innerHTML = ticket.resolver.userName;
         row.appendChild(cell7);
       } else {
         let cell7 = document.createElement("td");
@@ -87,10 +116,12 @@ async function getEmployeeTickets() {
         cell9.innerHTML = "";
         row.appendChild(cell9);
       }
-      document.getElementById("employeeTicketBody").appendChild(row);
+      document.getElementById("financeManagerTicketBody").appendChild(row);
     }
     let ticketView = document.getElementsByClassName("ticketView")[0];
     let height = ((index + 1) * 40) + 120;
     ticketView.style.height = `${height}px`;
+    let modal = document.getElementById("myModal");
+    modal.style.display = "none";
   }
 }

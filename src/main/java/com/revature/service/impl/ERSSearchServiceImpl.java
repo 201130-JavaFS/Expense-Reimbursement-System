@@ -45,9 +45,7 @@ public class ERSSearchServiceImpl implements ERSSearchService {
 	@Override
 	public List<Reimbursement> getAllTickets() throws BusinessException {
 		List<Reimbursement> ticketsList = new ArrayList<>();
-		int authorId = 1;
-		
-		ticketsList = ersSearchDAO.getAllTickets(authorId);
+		ticketsList = ersSearchDAO.getAllTickets();
 		if (ticketsList.size() == 0) {
 			log.warn("No Reimbursement Tickets Found.");
 		}

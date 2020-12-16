@@ -58,7 +58,7 @@ public class ERSDbQueries {
 	
 	public static final String GET_ALL_TICKETS_BY_STATUS = 
 			"select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, "
-			+ "reimb_author, reimb_resolver, reimb_type_id"
+			+ "reimb_author, reimb_resolver, reimb_type_id "
 			+ "from ers.reimbursement "
 			+ "where reimb_status_id=?";
 	

@@ -1,6 +1,4 @@
 
-const url = 'http://localhost:8080/project1/';
-
 window.addEventListener('load', function() {
   document.getElementById("submitButton").addEventListener('click', reimbRequest);
 });

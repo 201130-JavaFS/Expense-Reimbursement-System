@@ -59,7 +59,7 @@ public class ERSManipDAOImpl implements ERSManipDAO{
 			String sql = ERSDbQueries.RESOLVE_TICKET_STATUS;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-			preparedStatement.setFloat(2, reimb_resolver);
+			preparedStatement.setInt(2, reimb_resolver);
 			preparedStatement.setInt(3, DBConversions.statusToDatabase(status));
 			
 			preparedStatement.setInt(4, reimb_id);

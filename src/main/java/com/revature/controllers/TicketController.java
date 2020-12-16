@@ -34,8 +34,19 @@ public class TicketController {
 		String json = objectMapper.writeValueAsString(reimbList);
 		res.getWriter().print(json);
 		res.setStatus(200);
-		
-		log.info(username + " has viewed all tickets.");
+	}
+	
+	public void getAllTickets(HttpServletRequest req, HttpServletResponse res) 
+			throws IOException, BusinessException{
+		String username = null;
+		HttpSession httpSession = req.getSession(false);
+		if (httpSession != null) {
+			username = (String) httpSession.getAttribute("username");
+		}
+		List<Reimbursement> reimbList = ersSearchService.getAllTickets();
+		String json = objectMapper.writeValueAsString(reimbList);
+		res.getWriter().print(json);
+		res.setStatus(200);
 	}
 
 }

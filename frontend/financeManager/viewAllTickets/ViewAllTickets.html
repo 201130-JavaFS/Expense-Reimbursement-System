@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Tickets</title>
+    <link rel="stylesheet" type="text/css" href="../../ERS.css">
+    <link rel="stylesheet" type="text/css" href="../../TicketView.css">
+    <link rel="stylesheet" type="text/css" href="modal/Modal.css">
+    <script type="text/javascript" src="modal/Modal.js"></script>
+    <script type="text/javascript" src="ViewAllTickets.js"></script>
+    <script type="text/javascript" src="Filter.js"></script>
+    <script type="text/javascript" src="../../URL.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="ticketView">
+            <h1 class="viewHeader">View All Tickets</h1>
+            <table class="ticketTable">
+                <tr class="tableHead">
+                  <th id="filterStatus">Status<i class="fas fa-filter"></i></th>
+                  <th>Id</th>
+                  <th>Amount</th>
+                  <th>Type</th>
+                  <th>Submitted</th>
+                  <th>Resolved</th>
+                  <th>Resolver</th>
+                  <th>Description</th>
+                  <th>Receipt</th>
+                </tr>
+                <tbody id="financeManagerTicketBody"></tbody>
+            </table>
+            <br>
+            <a href="../FinanceManager.html" class="hrefBack">Back</a>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>Filter Results by Status</h5>
+        <div id="statusButtons">
+          <button id="byPending">Pending</button>
+          <button id="byApproved">Approved</button>
+          <button id="byDenied">Denied</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

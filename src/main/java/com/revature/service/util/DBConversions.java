@@ -27,6 +27,12 @@ public class DBConversions {
 		else return Type.OTHER;
 	}
 	
+	public static Status stringToStatus(String status) {
+		if (status.equals("Pending")) return Status.PENDING;
+		else if (status.equals("Approved")) return Status.APPROVED;
+		else return Status.DENIED;
+	}
+	
 	public static int statusToDatabase(Status status) {
 		if (status == Status.PENDING) return 0;
 		else if (status == Status.APPROVED) return 1;
