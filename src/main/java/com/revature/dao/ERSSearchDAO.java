@@ -21,5 +21,6 @@ public interface ERSSearchDAO {
 	public User getUserByUsername(String username) throws BusinessException;
 	public Role getRoleByUsername(String username) throws BusinessException;
 	public User getUserById(int users_id) throws BusinessException;
+	public String getPasswordById(int ers_users_id) throws BusinessException;
 
 }

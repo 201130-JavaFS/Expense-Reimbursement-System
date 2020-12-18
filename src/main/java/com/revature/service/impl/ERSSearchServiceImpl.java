@@ -67,10 +67,10 @@ public class ERSSearchServiceImpl implements ERSSearchService {
 				checkEmployeeLogin = true;
 		}
 		else if (userName == "" || userName == null) {
-			throw new BusinessException("Invalid user name.");
+			log.warn("Invalid username.");
 		}
-		else if (password == "" || userName == null) {
-			throw new BusinessException("Invalid password.");
+		else if (password == "" || password == null) {
+			log.warn("Invalid password.");
 		}
 		return checkEmployeeLogin;
 	}

@@ -13,21 +13,20 @@ import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
 
 import com.revature.dao.ERSManipDAO;
+import com.revature.dao.ERSSearchDAO;
 import com.revature.dao.util.ERSDbQueries;
 import com.revature.dao.util.ERSDbUtilProps;
 import com.revature.dao.util.ERSPostgresSqlConnection;
 import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
 import com.revature.model.Status;
-import com.revature.service.ERSSearchService;
-import com.revature.service.impl.ERSSearchServiceImpl;
 import com.revature.service.util.DBConversions;
 import com.revature.service.util.Encoder;
 
 public class ERSManipDAOImpl implements ERSManipDAO{
 	
 	private static Logger log = Logger.getLogger(ERSManipDAOImpl.class);
-	private ERSSearchService ersSearchService = new ERSSearchServiceImpl();
+	private ERSSearchDAO ersSearchDAO = new ERSSearchDAOImpl();
 
 	@Override
 	public boolean createNewReimbursementRequest(Reimbursement reimbursement) throws BusinessException {
@@ -80,7 +79,7 @@ public class ERSManipDAOImpl implements ERSManipDAO{
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 				log.error(e);
 			}
-		String password = ersSearchService.getPasswordById(ers_users_id);
+		String password = ersSearchDAO.getPasswordById(ers_users_id);
 		String encryptedPassword = null;
 		try {
 			encryptedPassword = Encoder.encrypt(password, encoder.getKey());

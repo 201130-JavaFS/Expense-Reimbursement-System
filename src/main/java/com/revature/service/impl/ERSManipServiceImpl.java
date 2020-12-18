@@ -47,7 +47,7 @@ public class ERSManipServiceImpl implements ERSManipService {
 				isCreated = ersManipDAO.createNewReimbursementRequest(reimbursement);
 			}
 			else {
-				log.warn("Cannot find user by with username: " + username + ".");
+				log.warn("Cannot find user with username: " + username + ".");
 			}
 		}
 		if (!isCreated) {

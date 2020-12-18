@@ -181,6 +181,7 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 	@Override
 	public List<Reimbursement> getAllTicketsByStatus(Status status) throws BusinessException {
 		List<Reimbursement> reimbList = new ArrayList<>();
+		if (status == null) return null;
 		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
 			String sql = ERSDbQueries.GET_ALL_TICKETS_BY_STATUS;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -209,6 +210,7 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
+		System.out.println("reimbList.size(): " + reimbList.size());
 		if (reimbList.size() == 0) return null;
 		else return reimbList;
 	}
@@ -317,6 +319,27 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
 		return null;
+	}
+	
+	@Override
+	public String getPasswordById(int ers_users_id) throws BusinessException {
+		String password = "";
+		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
+			String sql = ERSDbQueries.GET_PASSWORD_BY_ID;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, ers_users_id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				password = resultSet.getString("ers_password");
+			}
+			else {
+				log.warn("Error: Ticket does not exist.");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
+			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
+		}
+		return password;
 	}
 
 }
