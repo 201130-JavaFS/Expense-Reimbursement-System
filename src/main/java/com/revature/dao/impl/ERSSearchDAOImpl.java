@@ -22,7 +22,6 @@ import com.revature.exception.BusinessException;
 import com.revature.model.Reimbursement;
 import com.revature.model.Role;
 import com.revature.model.Status;
-import com.revature.model.Type;
 import com.revature.model.User;
 import com.revature.service.util.DBConversions;
 import com.revature.service.util.Encoder;
@@ -62,7 +61,8 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
-		return employeesTicketsList;
+		if (employeesTicketsList.size() == 0) return null;
+		else return employeesTicketsList;
 	}
 
 	@Override
@@ -74,9 +74,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				maxId = resultSet.getInt("maxId");
-			}
-			else {
-				log.warn("Error: No records exist.");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
@@ -116,7 +113,8 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
-		return ticketsList;
+		if (ticketsList.size() == 0) return null;
+		else return ticketsList;
 	}
 
 	@Override
@@ -130,35 +128,11 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			if (resultSet.next()) {
 				status = DBConversions.databaseToStatus(resultSet.getInt("reimb_status_id"));
 			}
-			else {
-				log.warn("Error: Ticket does not exist.");
-			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
 		return status;
-	}
-
-	@Override
-	public String getPasswordById(int ers_users_id) throws BusinessException {
-		String password = "";
-		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
-			String sql = ERSDbQueries.GET_PASSWORD_BY_ID;
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, ers_users_id);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				password = resultSet.getString("ers_password");
-			}
-			else {
-				log.warn("Error: Ticket does not exist.");
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			log.error(e);
-			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
-		}
-		return password;
 	}
 
 	@Override
@@ -171,9 +145,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				users_id = resultSet.getInt("ers_users_id");
-			}
-			else {
-				log.warn("Error: Ticket does not exist.");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
@@ -205,34 +176,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
 		return checkEmployeeLogin;
-	}
-
-	@Override
-	public User getUserById(int users_id) throws BusinessException {
-		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
-			String sql = ERSDbQueries.GET_USER_BY_ID;
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, users_id);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				User user = new User(
-					users_id,
-					resultSet.getString("ers_username"),
-					resultSet.getString("user_first_name"),
-					resultSet.getString("user_last_name"),
-					resultSet.getString("user_email"),
-					DBConversions.databaseToRole(resultSet.getInt("user_role_id"))
-					);
-				return user;
-			}
-			else {
-				log.warn("Could not find User.");
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			log.error(e);
-			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
-		}
-		return null;
 	}
 
 	@Override
@@ -271,77 +214,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 	}
 
 	@Override
-	public List<Reimbursement> getAllTicketsByType(Type type) throws BusinessException {
-		List<Reimbursement> reimbList = new ArrayList<>();
-		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
-			String sql = ERSDbQueries.GET_ALL_TICKETS_BY_TYPE;
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, DBConversions.typeToDatabase(type));
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Reimbursement reimbursement = new Reimbursement();
-				reimbursement.setId(resultSet.getInt("reimb_id"));
-				reimbursement.setAmount(resultSet.getFloat("reimb_amount"));
-				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
-				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
-				reimbursement.setSubmitted(submittedLocalDateTime);
-				reimbursement.setDescription(resultSet.getString("reimb_description"));
-				reimbursement.setAuthor(getUserById(resultSet.getInt("reimb_author")));
-				reimbursement.setStatus(DBConversions.databaseToStatus(resultSet.getInt("reimb_status_id")));
-				reimbursement.setType(type);
-				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
-					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
-					reimbursement.setResolved(resolvedLocalDateTime);
-					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
-				}
-				reimbList.add(reimbursement);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			log.error(e);
-			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
-		}
-		if (reimbList.size() == 0) return null;
-		else return reimbList;
-	}
-
-	@Override
-	public List<Reimbursement> getAllTicketsByStatusType(Status status, Type type) throws BusinessException {
-		List<Reimbursement> reimbList = new ArrayList<>();
-		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
-			String sql = ERSDbQueries.GET_ALL_TICKETS_BY_STATUS_TYPE;
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, DBConversions.statusToDatabase(status));
-			preparedStatement.setInt(2, DBConversions.typeToDatabase(type));
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Reimbursement reimbursement = new Reimbursement();
-				reimbursement.setId(resultSet.getInt("reimb_id"));
-				reimbursement.setAmount(resultSet.getFloat("reimb_amount"));
-				LocalDateTime localDateTime = resultSet.getTimestamp("reimb_submitted").toLocalDateTime();
-				String submittedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
-				reimbursement.setSubmitted(submittedLocalDateTime);
-				reimbursement.setDescription(resultSet.getString("reimb_description"));
-				reimbursement.setAuthor(getUserById(resultSet.getInt("reimb_author")));
-				reimbursement.setStatus(status);
-				reimbursement.setType(type);
-				if(resultSet.getTimestamp("reimb_resolved") != null) {
-					localDateTime = resultSet.getTimestamp("reimb_resolved").toLocalDateTime();
-					String resolvedLocalDateTime = DBConversions.getDateFromLocalDateTime(localDateTime);
-					reimbursement.setResolved(resolvedLocalDateTime);
-					reimbursement.setResolver(getUserById(resultSet.getInt("reimb_resolver")));
-				}
-				reimbList.add(reimbursement);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			log.error(e);
-			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
-		}
-		if (reimbList.size() == 0) return null;
-		else return reimbList;
-	}
-
-	@Override
 	public String getDecryptedPasswordByUsername(String userName) throws BusinessException {
 		String password = "";
 		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
@@ -351,9 +223,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				password = resultSet.getString("ers_password");
-			}
-			else {
-				log.warn("Error: User does not exist.");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
@@ -395,9 +264,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 						);
 				user = tempUser;
 			}
-			else {
-				log.warn("Error: User does not exist.");
-			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
@@ -416,9 +282,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			if (resultSet.next()) {
 				user_role_id = resultSet.getInt("user_role_id");
 			}
-			else {
-				log.warn("Error: User does not exist.");
-			}
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
@@ -426,6 +289,34 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 		if (user_role_id == 1) return Role.EMPLOYEE;
 		else if (user_role_id == 2) return Role.FINANCEMANAGER;
 		else return null;
+	}
+	
+	@Override
+	public User getUserById(int users_id) throws BusinessException {
+		try (Connection connection = ERSPostgresSqlConnection.getConnection()) {
+			String sql = ERSDbQueries.GET_USER_BY_ID;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, users_id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				User user = new User(
+					users_id,
+					resultSet.getString("ers_username"),
+					resultSet.getString("user_first_name"),
+					resultSet.getString("user_last_name"),
+					resultSet.getString("user_email"),
+					DBConversions.databaseToRole(resultSet.getInt("user_role_id"))
+					);
+				return user;
+			}
+			else {
+				log.warn("Could not find User.");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
+			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
+		}
+		return null;
 	}
 
 }

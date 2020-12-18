@@ -21,16 +21,20 @@ public class DBConversions {
 	}
 	
 	public static Type stringToType(String type) {
-		if (type.equals("Lodging") || type.equals("lodging")) return Type.LODGING;
-		else if (type.equals("Travel") || type.equals("travel")) return Type.TRAVEL;
-		else if (type.equals("Food") || type.equals("food")) return Type.FOOD;
-		else return Type.OTHER;
+		type = type.toLowerCase();
+		if (type.equals("lodging")) return Type.LODGING;
+		else if (type.equals("travel")) return Type.TRAVEL;
+		else if (type.equals("food")) return Type.FOOD;
+		else if (type.equals("other")) return Type.OTHER;
+		else return null;
 	}
 	
 	public static Status stringToStatus(String status) {
-		if (status.equals("Pending")) return Status.PENDING;
-		else if (status.equals("Approved")) return Status.APPROVED;
-		else return Status.DENIED;
+		status = status.toLowerCase();
+		if (status.equals("pending")) return Status.PENDING;
+		else if (status.equals("approved")) return Status.APPROVED;
+		else if (status.equals("denied")) return Status.DENIED;
+		else return null;
 	}
 	
 	public static int statusToDatabase(Status status) {

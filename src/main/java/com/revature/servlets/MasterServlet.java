@@ -15,6 +15,7 @@ import com.revature.controllers.TicketRequestController;
 import com.revature.controllers.TicketStatusController;
 import com.revature.exception.BusinessException;
 
+@SuppressWarnings("serial")
 public class MasterServlet extends HttpServlet {
 	
 	private static Logger log = Logger.getLogger(MasterServlet.class);

@@ -98,7 +98,7 @@ public class TicketStatusController {
 			res.getWriter().print(json);
 			res.setStatus(200);
 			
-			log.info(username + " has viewed all tickets by " + statusDTO.status + ".");
+			log.info(username + " has viewed all tickets by " + statusDTO.status + " status.");
 		}
 		
 	}
