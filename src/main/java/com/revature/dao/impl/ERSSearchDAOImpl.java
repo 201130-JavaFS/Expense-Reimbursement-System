@@ -210,7 +210,6 @@ public class ERSSearchDAOImpl implements ERSSearchDAO {
 			log.error(e);
 			throw new BusinessException(ERSDbUtilProps.ERROR_MESSAGE);
 		}
-		System.out.println("reimbList.size(): " + reimbList.size());
 		if (reimbList.size() == 0) return null;
 		else return reimbList;
 	}

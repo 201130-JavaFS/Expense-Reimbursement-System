@@ -1,5 +1,6 @@
 
 let ticketArray = [];
+let data;
 
 window.addEventListener('load', function() {
   getAllTickets();
@@ -11,7 +12,6 @@ function singleTicket(event) {
 
   let userName = null;
   let currentTicket = ticketArray[rowId];
-  console.log(currentTicket);
   if (currentTicket.resolver != null)
   userName = currentTicket.resolver.userName;
   sessionStorage.setItem("status", currentTicket.status);
@@ -24,14 +24,19 @@ function singleTicket(event) {
   sessionStorage.setItem("description", currentTicket.description);
   sessionStorage.setItem("receipt", currentTicket.receipt);
 
+  console.log(data);
   window.location.replace("viewSingleTicket/ViewSingleTicket.html");
+}
+
+function test() {
+  console.log(data);
 }
 
 async function getAllTickets() {
   let response = await fetch(url+'alltickets', {credentials: "include"});
 
   if (response.status === 200) {
-    let data = await response.json();
+    data = await response.json();
     let index = 0;
 
     for (let ticket of data) {

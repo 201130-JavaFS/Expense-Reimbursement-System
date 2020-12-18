@@ -52,7 +52,7 @@ async function getEmployeeTickets() {
       // resolver
       if (ticket.resolver != null) {
         let cell7 = document.createElement("td");
-        cell7.innerHTML = ticket.resolver;
+        cell7.innerHTML = ticket.resolver.userName;
         row.appendChild(cell7);
       } else {
         let cell7 = document.createElement("td");
