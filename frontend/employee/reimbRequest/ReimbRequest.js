@@ -4,15 +4,16 @@ window.addEventListener('load', function() {
 });
 
 async function reimbRequest() {
-  console.log("get into reimbRequest");
   let inputAmount = document.getElementById("amount").value;
   let inputType = document.getElementById("type").value;
   let inputDescription = document.getElementById("description").value;
+  let receiptFile = document.getElementById("image-file").files[0];
 
   let reimbRequest = {
     amount: inputAmount,
     type: inputType,
-    description: inputDescription
+    description: inputDescription,
+    receipt: receiptFile
   };
 
   console.log(reimbRequest);
