@@ -22,9 +22,9 @@ insert into ers.users values
 (6, 'hollings', 'rich123', 'Renee', 'Hollingsworth', 'renee.hollingsworth@revature.net', 1);
 
 insert into ers.reimbursement values
-(1, 350.20, current_timestamp, null, 'Stayed at the Hilton for one day.', null, 1, null, 1, 1),
-(2, 200.50, current_timestamp, null, 'Ate all you can eat sushi.', null, 4, null, 1, 3),
-(3, 11.13, current_timestamp, null, 'Lunch special at Taco truck.', null, 1, null, 1, 3),
-(4, 85.16, current_timestamp, null, 'Train tickets for month of July.', null, 1, null, 1, 2),
+(1, 350.20, current_timestamp, null, 'Stayed at the Hilton for one day.', null, 1, null, 0, 1),
+(2, 200.50, current_timestamp, null, 'Ate all you can eat sushi.', null, 4, null, 0, 3),
+(3, 11.13, current_timestamp, null, 'Lunch special at Taco truck.', null, 1, null, 0, 3),
+(4, 85.16, current_timestamp, null, 'Train tickets for month of July.', null, 1, null, 0, 2),
 (5, 123, current_timestamp, null, '', null, 1, null, 0, 4),
-(6, 15.74, current_timestamp, null, 'Carls Jr.', null, 1, null, 2, 3);
+(6, 15.74, current_timestamp, null, 'Carls Jr.', null, 1, null, 0, 3);
