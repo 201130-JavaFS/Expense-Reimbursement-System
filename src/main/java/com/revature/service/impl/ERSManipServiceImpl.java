@@ -67,7 +67,12 @@ public class ERSManipServiceImpl implements ERSManipService {
 			log.warn("Ticket was already resolved.");
 		}
 		else {
-			isResolved = ersManipDAO.resolveTicketStatus(status, reimb_id, reimb_resolver);
+			if (ersSearchDAO.getUserById(reimb_resolver) != null) {
+				isResolved = ersManipDAO.resolveTicketStatus(status, reimb_id, reimb_resolver);
+			}
+			else {
+				log.warn("Invalid user id.");
+			}
 			if (!isResolved) {
 				log.warn("Could not resolve reimbursement ticket.");
 			}
