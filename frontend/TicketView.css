@@ -87,7 +87,8 @@
 }
 
 #resolveButtons {
-  height: 10%;
+  margin-top: 20px;
+  height: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
