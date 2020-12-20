@@ -7,16 +7,27 @@ async function reimbRequest() {
   let inputAmount = document.getElementById("amount").value;
   let inputType = document.getElementById("type").value;
   let inputDescription = document.getElementById("description").value;
-  let receiptFile = document.getElementById("image-file").files[0];
+  let file = document.getElementById("image-file").files[0];
+  let imageBlob;
+  
+  //or let file = document.querySelector('input[type=file]').files[0];
+  let reader = new FileReader();
+  reader.onload = await function(e) {
+    imageBlob = new Blob([new Uint8Array(e.target.result)], {type: file.type });
+    console.log(imageBlob);
+  };
+  reader.readAsArrayBuffer(file);
+  console.log(reader);
+  console.log(imageBlob);
 
   let reimbRequest = {
     amount: inputAmount,
     type: inputType,
     description: inputDescription,
-    receipt: receiptFile
+    receipt: reader
   };
 
-  console.log(reimbRequest);
+  // console.log(reimbRequest.receipt);
 
   let response = await fetch(url + "reimbrequest", {
     method: "POST",

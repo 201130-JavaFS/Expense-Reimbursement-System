@@ -34,6 +34,9 @@ public class TicketRequestController {
 		ReimbRequestDTO reimbRequestDTO = objectMapper.readValue(body, ReimbRequestDTO.class);
 		HttpSession httpSession = req.getSession(false);
 		String username = null;
+		
+		System.out.println(reimbRequestDTO.receipt);
+		
 		if (httpSession != null) {
 			username = (String) httpSession.getAttribute("username");
 		}
@@ -41,7 +44,8 @@ public class TicketRequestController {
 				username,
 				reimbRequestDTO.amount,
 				reimbRequestDTO.type,
-				reimbRequestDTO.description
+				reimbRequestDTO.description,
+				reimbRequestDTO.receipt
 				)) {
 			log.info(username + " submitted a reimbursement ticket request.");
 			res.setStatus(200);

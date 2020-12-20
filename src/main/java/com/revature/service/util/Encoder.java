@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encoder {
 	
-	private String password = "admin"; // environment variables not working
+	private String password = "admin";
 	private byte[] salt = new String("12345678").getBytes();
 	private int iterationCount = 40000;
 	private int keyLength = 128;
@@ -66,3 +66,4 @@ public class Encoder {
     }
 	
 }
+// source: https://stackoverflow.com/questions/1132567/encrypt-password-in-configuration-files

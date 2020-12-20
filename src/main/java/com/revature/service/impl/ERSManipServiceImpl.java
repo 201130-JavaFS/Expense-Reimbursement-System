@@ -1,5 +1,7 @@
 package com.revature.service.impl;
 
+import java.sql.Blob;
+
 import org.apache.log4j.Logger;
 
 import com.revature.dao.ERSManipDAO;
@@ -21,7 +23,7 @@ public class ERSManipServiceImpl implements ERSManipService {
 	private ERSSearchDAO ersSearchDAO = new ERSSearchDAOImpl();
 
 	@Override
-	public boolean createReimbursementRequest(String username, float amount, String type, String description) throws BusinessException {
+	public boolean createReimbursementRequest(String username, float amount, String type, String description, Blob receipt) throws BusinessException {
 		boolean isCreated = false;
 		Reimbursement reimbursement = new Reimbursement();
 		int id = ersSearchDAO.getMaxId() + 1;
@@ -44,6 +46,7 @@ public class ERSManipServiceImpl implements ERSManipService {
 				reimbursement.setAuthor(user);
 				reimbursement.setStatus(Status.PENDING);
 				reimbursement.setType(enumType);
+				reimbursement.setReceipt(receipt);
 				isCreated = ersManipDAO.createNewReimbursementRequest(reimbursement);
 			}
 			else {

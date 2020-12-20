@@ -13,8 +13,8 @@ public class ERSDbQueries {
 	
 	public static final String CREATE_NEW_REIMBURSEMENT_REQUEST = 
 			"insert into ers.reimbursement(reimb_id, reimb_amount, reimb_submitted, reimb_description, "
-			+ "reimb_author, reimb_status_id, reimb_type_id) "
-			+ "Values(?,?,?,?,?,?,?)";
+			+ "reimb_author, reimb_status_id, reimb_type_id, reimb_receipt) "
+			+ "Values(?,?,?,?,?,?,?,?)";
 	
 	public static final String GET_ALL_EMPLOYEES_TICKETS = 
 			"select reimb_id, reimb_amount, reimb_submitted, reimb_resolved, reimb_description"

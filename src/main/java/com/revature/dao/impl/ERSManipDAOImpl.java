@@ -41,6 +41,8 @@ public class ERSManipDAOImpl implements ERSManipDAO{
 			preparedStatement.setInt(5, reimbursement.getAuthor().getId());
 			preparedStatement.setInt(6, DBConversions.statusToDatabase(reimbursement.getStatus()));
 			preparedStatement.setInt(7, DBConversions.typeToDatabase(reimbursement.getType()));
+			byte[] blobAsBytes = reimbursement.getReceipt().getBytes(1, (int) reimbursement.getReceipt().length());
+			preparedStatement.setBytes(8, blobAsBytes);
 			
 			int check = preparedStatement.executeUpdate();
 			if (check > 0) isCreated = true;
