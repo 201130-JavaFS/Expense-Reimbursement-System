@@ -4,7 +4,6 @@ window.addEventListener('load', function() {
 });
 
 async function reimbRequest() {
-  console.log("get into reimbRequest");
   let inputAmount = document.getElementById("amount").value;
   let inputType = document.getElementById("type").value;
   let inputDescription = document.getElementById("description").value;
@@ -14,8 +13,6 @@ async function reimbRequest() {
     type: inputType,
     description: inputDescription
   };
-
-  console.log(reimbRequest);
 
   let response = await fetch(url + "reimbrequest", {
     method: "POST",
@@ -27,8 +24,12 @@ async function reimbRequest() {
     window.location.replace("../Submitted.html");
   }
   else {
-    // do stuff on fail
-    console.log("failed somehow.");
+    let failedMessage = document.getElementById("submitFailed");
+    failedMessage.innerHTML = "Reimbursement Request Rejected.";
+    failedMessage.style.display = "block";
+    setTimeout(function() {
+      document.getElementById("submitFailed").style.display = "none";
+    }, 2500);
   }
 
 }

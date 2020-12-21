@@ -114,15 +114,23 @@ function findValue(keyValue, ticketArray) {
 }
 
 function getPendingTickets() {
+  closeModal();
   getFilteredTickets("PENDING");
 }
 
 function getApprovedTickets() {
+  closeModal();
   getFilteredTickets("APPROVED");
 }
 
 function getDeniedTickets() {
+  closeModal();
   getFilteredTickets("DENIED");
+}
+
+function closeModal() {
+  let modal = document.getElementById("myModal");
+  modal.style.display = "none";
 }
 
 function singleTicket(event) {
