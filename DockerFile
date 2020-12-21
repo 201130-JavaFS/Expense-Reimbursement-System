@@ -4,6 +4,5 @@ COPY ./target/*.war $CATALINA_HOME/webapps
 
 ENV postgresUsername=postgres
 ENV postgresPassword=password
-ENV awsPassword=password
 
 EXPOSE 8080
