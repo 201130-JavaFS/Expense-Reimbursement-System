@@ -105,7 +105,6 @@ public class MasterServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
-		res.getWriter().print("testing doPost");
 		doGet(req, res);
 	}
 
