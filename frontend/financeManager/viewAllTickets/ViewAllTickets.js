@@ -5,10 +5,16 @@ let ticketArray = [];
 
 window.addEventListener('load', function() {
   getAllTickets();
+  document.getElementById("exit").addEventListener('click', backToDashboard);
+  document.getElementById("byAll").addEventListener('click', getAllTicketsAndCloseModal);
   document.getElementById("byPending").addEventListener('click', getPendingTickets);
   document.getElementById("byApproved").addEventListener('click', getApprovedTickets);
   document.getElementById("byDenied").addEventListener('click', getDeniedTickets);
 });
+
+function backToDashboard() {
+  window.location.replace("../FinanceManager.html");
+}
 
 function getFilteredTickets(chosenStatus) {
   let tableBody = document.getElementById("financeManagerTicketBody");
@@ -23,7 +29,7 @@ function getFilteredTickets(chosenStatus) {
       row.setAttribute("id", `${ticket.id}`);
       row.addEventListener('click', singleTicket);
 
-      // status
+    // status
     let cell1 = document.createElement("td");
     cell1.innerHTML = ticket.status;
     row.appendChild(cell1);
@@ -113,6 +119,11 @@ function findValue(keyValue, ticketArray) {
   }
 }
 
+function getAllTicketsAndCloseModal() {
+  closeModal();
+  getAllTickets();
+}
+
 function getPendingTickets() {
   closeModal();
   getFilteredTickets("PENDING");
@@ -135,6 +146,7 @@ function closeModal() {
 
 function singleTicket(event) {
   event.stopPropagation();
+
   let rowId = this.id;
   singleTicketId = rowId;
   let tableBody = document.getElementById("financeManagerTicketBody");
@@ -248,6 +260,10 @@ function getOneTicket(ticket) {
 }
 
 async function getAllTickets() {
+  let tableBody = document.getElementById("financeManagerTicketBody");
+  while (tableBody.firstChild) {
+    tableBody.removeChild(tableBody.firstChild);
+  }
   let response = await fetch(url+'alltickets', {credentials: "include"});
 
   if (response.status === 200) {
