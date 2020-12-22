@@ -1,7 +1,7 @@
 mvn clean package
 docker build -t project1 .
 docker tag project1 topheryun/project1
-docker login -u topheryun -p Riot9191
+docker login -u topheryun -p ********
 docker push topheryun/project1
 docker stop ers-container || true && docker rm ers-container || true
 docker run -dp 8090:8080 --name ers-container topheryun/project1
