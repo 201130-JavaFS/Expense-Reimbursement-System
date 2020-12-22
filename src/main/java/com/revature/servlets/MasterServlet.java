@@ -28,7 +28,6 @@ public class MasterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		res.setContentType("application/json");
 		res.setStatus(404);
-		res.getWriter().write("<h1>testing</h1>");
 
 		final String URI = req.getRequestURI().replace("/project1/", "");
 		
